@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import LoginScreen from "./apps/Screens/LoginScreen/LoginScreen";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
+import HomeScreen from "./apps/Screens/HomeScreen/HomeScreen";
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -16,7 +17,7 @@ export default function App() {
     >
       <View style={styles.container}>
         <SignedIn>
-          <Text>You are Signed in</Text>
+          <HomeScreen />
         </SignedIn>
         <SignedOut>
           <LoginScreen />

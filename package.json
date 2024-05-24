@@ -10,17 +10,19 @@
   },
   "dependencies": {
     "@clerk/clerk-expo": "^1.1.5",
+    "@supabase/supabase-js": "^2.43.4",
+    "@types/react": "~18.2.79",
     "expo": "~51.0.8",
     "expo-auth-session": "^5.5.2",
     "expo-av": "~14.0.5",
     "expo-font": "~12.0.5",
     "expo-status-bar": "~1.12.1",
     "expo-video": "^1.1.9",
+    "expo-web-browser": "~13.0.3",
     "react": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-native": "0.74.1",
-    "typescript": "~5.3.3",
-    "@types/react": "~18.2.79",
-    "expo-web-browser": "~13.0.3"
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

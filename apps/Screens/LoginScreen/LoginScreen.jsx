@@ -5,6 +5,7 @@ import Colors from "../../../Utils/Colors";
 import * as WebBrowser from "expo-web-browser";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "./hooks/useWarmUpBrowser";
+import { supabase } from "../../../Utils/SupabaseConfig";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -20,6 +21,18 @@ export default function LoginScreen() {
 
       if (createdSessionId) {
         setActive({ session: createdSessionId });
+        if (signUp?.emailAddress) {
+          const { data, error } = await supabase
+            .from("users")
+            .insert([
+              { some_column: signUp?.firstName, email: signUp?.emailAddress },
+            ])
+            .select();
+
+          if (data) {
+            console.log(data);
+          }
+        }
       } else {
         // Use signIn or signUp for next steps such as MFA
       }
