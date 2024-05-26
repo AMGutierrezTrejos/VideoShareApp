@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { Video, ResizeMode } from "expo-av";
-import Colors from "../../../Utils/Colors";
+import Colors from "../../Utils/Colors";
 import * as WebBrowser from "expo-web-browser";
 import { useOAuth } from "@clerk/clerk-expo";
-import { useWarmUpBrowser } from "./hooks/useWarmUpBrowser";
-import { supabase } from "../../../Utils/SupabaseConfig";
+import { useWarmUpBrowser } from "../../hooks/useWarmUpBrowser";
+import { supabase } from "../../Utils/SupabaseConfig";
 
 WebBrowser.maybeCompleteAuthSession();
 
