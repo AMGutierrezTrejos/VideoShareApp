@@ -24,7 +24,13 @@ export default function LoginScreen() {
         if (signUp) {
           const { data, error } = await supabase
             .from("Users")
-            .insert([{ name: signUp?.firstName, email: signUp?.emailAddress, username: (signUp?.emailAddress).split('@')[0] }])
+            .insert([
+              {
+                name: signUp?.firstName,
+                email: signUp?.emailAddress,
+                username: (signUp?.emailAddress).split("@")[0],
+              },
+            ])
             .select();
 
           if (data) {
