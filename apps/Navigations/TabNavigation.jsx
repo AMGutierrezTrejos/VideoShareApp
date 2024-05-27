@@ -3,13 +3,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen/HomeScreen";
 import SearchScreen from "../Screens/Search/SearchScreen";
-import AddScreen from "../Screens/Add/AddScreen";
 import ProfileScreen from "../Screens/Profile/ProfileScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import Colors from "../Utils/Colors";
+import AddScreenNavigation from "./AddScreenNavigation";
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -44,7 +44,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Add"
-        component={AddScreen}
+        component={AddScreenNavigation}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons

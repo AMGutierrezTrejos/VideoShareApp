@@ -22,19 +22,26 @@ export default function LoginScreen() {
       if (createdSessionId) {
         setActive({ session: createdSessionId });
         if (signUp) {
+          const emailAddress = signUp?.emailAddress;
+          const username = emailAddress ? emailAddress.split("@")[0] : null;
+
           const { data, error } = await supabase
             .from("Users")
             .insert([
               {
                 name: signUp?.firstName,
-                email: signUp?.emailAddress,
-                username: (signUp?.emailAddress).split("@")[0],
+                email: emailAddress,
+                username: username,
               },
             ])
             .select();
 
           if (data) {
             console.log(data);
+          }
+
+          if (error) {
+            console.error("Error inserting user:", error);
           }
         }
       } else {
@@ -104,7 +111,7 @@ export default function LoginScreen() {
         >
           <Image
             source={require("./../../../assets/images/GoogleIcon.png")}
-            style={{ width: 30, height: 30 }}
+            style={{ width: 30, height: 30, borderRadius: 15 }} // Asegúrate de que la imagen tenga bordes redondeados
           />
           <Text style={{ fontFamily: "outfit" }}>Sign In With Google</Text>
         </TouchableOpacity>
@@ -116,7 +123,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   video: {
     height: "100%",
-    width: "1000",
+    width: "100%",
     position: "absolute",
     top: 0,
     left: 0,

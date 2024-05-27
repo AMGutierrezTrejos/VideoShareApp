@@ -2,9 +2,12 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "../../Utils/Colors";
 import * as ImagePicker from "expo-image-picker";
-import * as VideoThumbnails from 'expo-video-thumbnails';
+import * as VideoThumbnails from "expo-video-thumbnails";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AddScreen() {
+  const navigation = useNavigation();
+
   // This is for selecting video from gallery
   const SelectVideoFile = async () => {
     // No permissions request is necessary for launching the image library
@@ -25,13 +28,10 @@ export default function AddScreen() {
   //Used to generate thumbnail
   const GenerateThumbnail = async (videoUri) => {
     try {
-      const { uri } = await VideoThumbnails.getThumbnailAsync(
-        videoUri,
-        {
-          time: 15000,
-        }
-      );
-      setImage(uri);
+      const { uri } = await VideoThumbnails.getThumbnailAsync(videoUri, {
+        time: 15000,
+      });
+      navigation.navigate('PreviewScreen', { video: videoUri, thumbnail: uri });
     } catch (e) {
       console.warn(e);
     }
