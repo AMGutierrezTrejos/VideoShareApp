@@ -17,13 +17,15 @@ export default function PreviewScreen() {
   const params = useRoute().params;
   const navigation = useNavigation();
   const [description, setDescription] = useState();
+  const [videoUrl, setVideoUrl] = useState();
 
   useEffect(() => {
     console.log(params);
   }, []);
 
   const publishHandler = async () => {
-    UploadFileToAws(params.video, "video");
+    await UploadFileToAws(params.video, "video");
+    await UploadFileToAws(params.thumbnail, "image");
   };
 
   const UploadFileToAws = async (file, type) => {
@@ -41,6 +43,11 @@ export default function PreviewScreen() {
         .promise()
         .then((resp) => {
           console.log("File uploaded successfully", resp);
+          if (type == "video") {
+            setVideoUrl(resp?.Location);
+          } else {
+            console.log(resp.Location.videoUrl);
+          }
         });
     } catch (error) {
       console.log("Error uploading file: ", error);
