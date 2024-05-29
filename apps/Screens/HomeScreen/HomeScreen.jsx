@@ -2,15 +2,22 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { supabase } from "../../Utils/SupabaseConfig";
+import VideoThumbnailItem from "./VideoThumbnailItem";
 
 export default function HomeScreen() {
   const { user } = useUser();
   const [videoList, setVideoList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadCount, setLoadCount] = useState(0);
 
   useEffect(() => {
     user && updateProfileImage();
-    GetLatestVideoList();
+    setLoadCount(0);
   }, [user]);
+
+  useEffect(() => {
+    GetLatestVideoList();
+  }, [loadCount]);
 
   const updateProfileImage = async () => {
     const { data, error } = await supabase
@@ -24,15 +31,18 @@ export default function HomeScreen() {
   };
 
   const GetLatestVideoList = async () => {
+    setLoading(true);
     const { data, error } = await supabase
       .from("PostList")
       .select("*,Users(username,name,profileImage)")
-      .range(0, 10);
+      .range(loadCount, loadCount + 10)
+      .order("id", { ascending: false });
 
-    console.log(data);
-    console.log(error);
+    setVideoList((videoList) => [...videoList, ...data]);
 
-    setVideoList(data);
+    if (data) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +67,13 @@ export default function HomeScreen() {
       <View>
         <FlatList
           data={videoList}
-          renderItem={({ item, index }) => <View></View>}
+          numColumns={2}
+          style={{ display: "flex" }}
+          onRefresh={GetLatestVideoList}
+          refreshing={loading}
+          onEndReached={() => setLoadCount(loadCount + 10)}
+          onEndReachedThreshold={0.2}
+          renderItem={({ item, index }) => <VideoThumbnailItem video={item} />}
         />
       </View>
     </View>
